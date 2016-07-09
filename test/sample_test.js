@@ -1,5 +1,5 @@
 //var angular = require('angular');
-require('angular-mocks');
+//require('angular-mocks');
 require('../app/js/client');
 
 describe('a test', () => {
