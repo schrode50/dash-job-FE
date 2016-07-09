@@ -31,6 +31,7 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-mocha-reporter',
       'karma-chrome-launcher',
+      'karma-firefox-launcher',
       'karma-growl-reporter'
     ],
 

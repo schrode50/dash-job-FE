@@ -4,10 +4,9 @@
   "description": "Front end for DashJob",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/karma start --browsers Chrome --single-run",
+    "test": "./node_modules/.bin/karma start --browsers Firefox --single-run",
     "start": "node server.js",
     "lint": "./node_modules/eslint/bin/eslint.js *"
-
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +22,7 @@
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
+    "karma-firefox-launcher": "^1.0.0",
     "karma-growl-reporter": "^1.0.0",
     "karma-jasmine": "^1.0.2",
     "karma-mocha-reporter": "^2.0.0",
