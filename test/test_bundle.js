@@ -44,15 +44,14 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	const angular = __webpack_require__(1);
+	var angular = __webpack_require__(1);
 	__webpack_require__(3);
 	__webpack_require__(4);
 
 	describe('a test', () => {
 	  it('should test the laws of the universe', () => {
 	    expect(true).toBe(true);
-	 
+
 	  });
 
 	});
