@@ -51,9 +51,7 @@
 	describe('a test', () => {
 	  it('should test the laws of the universe', () => {
 	    expect(true).toBe(true);
-
 	  });
-
 	});
 
 

@@ -4,7 +4,9 @@
   "description": "Front end for DashJob",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/karma start --browsers Chrome --single-run"
+    "test": "./node_modules/.bin/karma start --browsers Chrome --single-run",
+    "start": "node server.js",
+    "lint": "./node_modules/eslint/bin/eslint.js *"
 
   },
   "author": "",
