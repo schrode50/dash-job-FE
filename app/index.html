@@ -12,8 +12,8 @@
   </head>
 
   <body data-ng-app="JobDash">
-
-    <main ng-cloak ng-controller="JobController as jobctrl" ng-init="jobctrl.getJobs()">
+<main ng-controller="AuthController as authctrl" ng-init="authctrl.goSignUp()">
+    <!-- <main ng-cloak ng-controller="JobController as jobctrl" ng-init="jobctrl.getJobs()">
       <h1>
         Jobs
       </h1>
@@ -35,9 +35,9 @@
             <input type="text" ng-model="jobctrl.newJob.title" placeholder="title">
             <input type="text" ng-model="jobctrl.newJob.company" placeholder="company">
             <button type="submit">SUBMIT</button>
-          </form>
+          </form> -->
 
-    
+
 
           <main ng-view></main>
 
