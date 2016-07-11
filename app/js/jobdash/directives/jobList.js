@@ -1,7 +1,7 @@
 module.exports = function(app) {
-  app.directive('jobDirective', function() {
+  app.directive('jobList', function() {
     return {
-      templateUrl: './templates/jobdash/job.html',
+      templateUrl: './templates/job/joblist.html',
       scope: {
         job: '=',
         form:'@'

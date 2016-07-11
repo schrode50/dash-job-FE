@@ -3,15 +3,16 @@ module.exports = function(app) {
     this.$http = $http;
     this.jobs = [];
 
-    this.getJobs = function(){
+    this.getActiveJobs = function(){
       $http({
         method: 'GET',
-        url:'http://localhost:3000/jobs',
+        url:'http://localhost:3000/jobs/active',
         headers: {
           token: AuthService.getToken()
         }
       })
       .then((res) => {
+        console.log(res.data);
         this.jobs = res.data.jobs;
       },(err) => {
         console.log(err);
