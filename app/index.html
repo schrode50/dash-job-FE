@@ -13,31 +13,20 @@
 
   <body data-ng-app="JobDash">
 
-    <main ng-cloak ng-controller="JobController as jobctrl" ng-init="jobctrl.getJobs()">
+    <main ng-cloak ng-controller="JobController as jobctrl" ng-init="jobctrl.getActiveJobs()">
       <h1>
         Jobs
       </h1>
-          <ul>
-            <li ng-repeat="job in jobctrl.jobs">
-              JOB TITLE:
-              {{job.title}}
-              COMPANY:
-              {{job.company}}
-              <form ng-submit="jobctrl.updateJobs(job, updatedJob)">
-                <input type="text" ng-model="updatedJob.title" placeholder="title">
-                <input type="text" ng-model="updatedJob.company" placeholder="company">
-                <button type="submit">SUBMIT</button>
-              </form>
-              <button ng-click="jobctrl.deleteJobs(job)">DELETE</button>
-            <li>
-          </ul>
-          <form ng-submit="jobctrl.addJobs()">
-            <input type="text" ng-model="jobctrl.newJob.title" placeholder="title">
-            <input type="text" ng-model="jobctrl.newJob.company" placeholder="company">
-            <button type="submit">SUBMIT</button>
-          </form>
 
-    
+
+ <job-list></job-list>
+ <job-form></job-form>
+
+      <hr />
+
+
+
+
 
           <main ng-view></main>
 

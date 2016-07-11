@@ -18,7 +18,7 @@ module.exports = function(app) {
 
       return $http({
         url: 'http://localhost:3000/signin',
-        methods: 'POST',
+        method: 'POST',
         headers: {
           authorization: authString
         }

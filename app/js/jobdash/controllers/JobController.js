@@ -1,17 +1,18 @@
 module.exports = function(app) {
   app.controller('JobController', function($http, AuthService) {
     this.$http = $http;
-    this.jobs = []; 
+    this.jobs = [];
 
-    this.getJobs = function(){
+    this.getActiveJobs = function(){
       $http({
         method: 'GET',
-        url:'http://localhost:3000/jobs',
+        url:'http://localhost:3000/jobs/active',
         headers: {
           token: AuthService.getToken()
         }
       })
       .then((res) => {
+        console.log(res.data);
         this.jobs = res.data.jobs;
       },(err) => {
         console.log(err);
