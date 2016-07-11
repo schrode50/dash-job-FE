@@ -3,6 +3,11 @@
 module.exports = function(JobDash) {
   JobDash.config(['$routeProvider', function($route) {
     $route
+      .when('/',{
+        templateUrl:'./templates/partials/home.html',
+        controller:'JobController',
+        controllerAs:'jobctrl'
+      })
       .when('/signin',{
         templateUrl: './templates/partials/signIn.html',
         controller:'AuthController',
