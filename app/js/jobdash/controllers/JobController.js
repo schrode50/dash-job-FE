@@ -1,11 +1,16 @@
 module.exports = function(app) {
-  //TODO: need to add AuthService
-  app.controller('JobController', function($http) {
+  app.controller('JobController', function($http, AuthService) {
     this.$http = $http;
     this.jobs = [];
 
     this.getJobs = function(){
-      this.$http.get('http://localhost:3000/jobs')
+      $http({
+        method: 'GET',
+        url:'http://localhost:3000/jobs',
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
       .then((res) => {
         this.jobs = res.data.jobs;
       },(err) => {
@@ -14,17 +19,30 @@ module.exports = function(app) {
     };
 
     this.addJobs = function(job) {
-      this.$http.post('http://localhost:3000/jobs', job)
+      $http({
+        method: 'POST',
+        data: job,
+        url: 'http://localhost:3000/jobs',
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
       .then((res) => {
         this.jobs.push(res.data);
-        this.newJob = null;
       }, (err) => {
         console.log(err);
       });
     }.bind(this);
 
     this.deleteJobs = function(job) {
-      this.$http.delete('http://localhost:3000/jobs/' + job._id)
+      $http({
+        method: 'DELETE',
+        data: job,
+        url: 'http://localhost:3000/jobs/' + job._id,
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
       .then(() => {
         let index = this.jobs.indexOf(job);
         this.jobs.splice(index, 1);
@@ -34,7 +52,14 @@ module.exports = function(app) {
     }.bind(this);
 
     this.updateJobs = function(job) {
-      this.$http.put('http://localhost:3000/jobs', job)
+      $http({
+        method: 'PUT',
+        data: job,
+        url: 'http://localhost:3000/jobs',
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
       .then(() => {
         this.jobs = this.jobs.map(nJob => {
           return nJob._id === job._id ? job : nJob;
