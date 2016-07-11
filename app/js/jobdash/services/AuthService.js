@@ -12,10 +12,12 @@ module.exports = function(app){
       });
     };
     service.signIn = function(user){
+      console.log('in service signin', user);
       let base64 = btoa(user.username + ':' + user.password);
-      let authString = 'Basic' + base64;
+      let authString = 'Basic ' + base64;
       return $http({
         method: 'POST',
+        data:user,
         url: 'http://localhost:3000/signin',
         headers: {
           authorization: authString

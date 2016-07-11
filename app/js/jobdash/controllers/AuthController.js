@@ -7,7 +7,8 @@ module.exports = function(app){
       AuthService.signUp(user);
     };
     this.signIn = function(user){
-      AuthService.signUp(user);
+      console.log('in controller signin', user);
+      AuthService.signIn(user);
     };
   });
 };
