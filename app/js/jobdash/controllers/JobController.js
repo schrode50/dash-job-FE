@@ -1,7 +1,7 @@
 module.exports = function(app) {
   app.controller('JobController', function($http, AuthService) {
     this.$http = $http;
-    this.jobs = [];
+    this.jobs = []; 
 
     this.getJobs = function(){
       $http({
