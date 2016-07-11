@@ -1,13 +1,18 @@
 'use strict';
 
-module.exports = function(crudApp) {
-  crudApp.config(['$routeProvider', function($route) {
+module.exports = function(JobDash) {
+  JobDash.config(['$routeProvider', function($route) {
     $route
-      .when('/', {
-        templateUrl: '/templates/partials/FirstApp.html'
+      .when('/signin',{
+        templateUrl: './templates/partials/signIn.html',
+        controller:'AuthController',
+        controllerAs:'authctrl'
       })
-      .otherwise({
-        redirectTo: '/'
+      .when('/signup', {
+        templateUrl: './templates/partials/signUp.html',
+        controller:'AuthController',
+        controllerAs: 'authctrl'
       });
+
   }]);
 };
