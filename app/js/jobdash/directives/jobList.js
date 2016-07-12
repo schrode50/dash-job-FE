@@ -9,12 +9,12 @@ module.exports = function (app) {
 
       $scope.$watch('today', function (model) {
         console.log(model);
-        console.log('yeah');
+        // console.log('yeah');
       }, true);
 
       $scope.$watch('jobs', function (model) {
         console.log(model);
-        console.log('Oh, yeah!');
+        // console.log('Oh, yeah!');
       }, true);
 
     }];
