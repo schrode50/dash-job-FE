@@ -15,8 +15,6 @@ module.exports = function(app) {
       })
       .then((res) => {
         this.jobs = res.data;
-      },(err) => {
-        console.log(err);
       })
       .then(() => {
         console.log('get active events?');

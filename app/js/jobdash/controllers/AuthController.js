@@ -16,7 +16,7 @@ module.exports = function(app){
     };
     this.signIn = function(user){
       AuthService.signIn(user);
-      $location.url('/');
+      
     };
     this.signOut = function(){
       AuthService.signOut();
