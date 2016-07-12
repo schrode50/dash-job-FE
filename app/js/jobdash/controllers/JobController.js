@@ -6,6 +6,12 @@ module.exports = function(app) {
     this.backlog = [];  //from active and value > 0
     this.inprocess = []; //from active and value > 2
     this.applied = []; //from active and value = 1
+    this.showform = false
+    this.paseteurl = "";
+
+    this.pasteHandler = function(){
+      this.showform = true
+    }
 
     this.getActiveJobs = function(){
       $http({
@@ -17,9 +23,8 @@ module.exports = function(app) {
       })
       .then((res) => {
         this.jobs = res.data;
-        this.today = sortJobs.getToday(this.jobs)
-        this.backlog = sortJobs.getBackLog(this.jobs)
-        console.log("today",sortJobs.getToday(this.jobs));
+        this.today = sortJobs.getToday(this.jobs);
+        this.backlog = sortJobs.getBackLog(this.jobs);
       },(err) => {
         console.log(err);
       });
@@ -35,7 +40,7 @@ module.exports = function(app) {
         }
       })
       .then((res) => {
-        this.jobs.push(res.data);
+        this.backlog.push(res.data);
       }, (err) => {
         console.log(err);
       });
