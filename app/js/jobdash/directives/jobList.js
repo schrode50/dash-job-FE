@@ -3,10 +3,9 @@ module.exports = function(app) {
     return {
       templateUrl: './templates/job/joblist.html',
       scope: {
-        job: '=',
+        jobs: '=',
         form:'@'
       }
     };
-
   });
 };
