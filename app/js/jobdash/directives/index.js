@@ -1,3 +1,4 @@
 module.exports = function(app) {
-  require('./FirstDirective')(app);
+  require('./jobList')(app);
+  require('./jobForm')(app);
 };
