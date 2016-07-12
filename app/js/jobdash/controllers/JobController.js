@@ -2,12 +2,21 @@ module.exports = function(app) {
   app.controller('JobController', function($http, AuthService, sortJobs) {
     this.$http = $http;
     this.jobs = [];
+    this.events =[];
     this.today = [];  //from active and isToay = true
     this.backlog = [];  //from active and value > 0
     this.inprocess = []; //from active and value > 2
     this.applied = []; //from active and value = 1
+    this.showform = false
+    this.paseteurl = "";
+
+    this.pasteHandler = function(){
+      this.showform = true
+    }
+
 
     this.getActiveJobs = function(){
+      console.log('get active jobs');
       $http({
         method: 'GET',
         url:'http://localhost:3000/jobs/active',
@@ -17,14 +26,27 @@ module.exports = function(app) {
       })
       .then((res) => {
         this.jobs = res.data;
-        this.today = sortJobs.getToday(this.jobs)
-        this.backlog = sortJobs.getBackLog(this.jobs)
-        console.log("today",sortJobs.getToday(this.jobs));
-      },(err) => {
-        console.log(err);
+        this.today = sortJobs.getToday(this.jobs);
+        this.backlog = sortJobs.getBackLog(this.jobs);
+        console.log('today',sortJobs.getToday(this.jobs));
+      })
+      .then(() => {
+        console.log('get active events?');
+        $http({
+          method: 'GET',
+          url: 'http://localhost:3000/events/active',
+          headers: {
+            token: AuthService.getToken()
+          }
+        })
+        .then((res) => {
+          this.events =res.data;
+          console.log('third then', this.events);
+        }, (err) => {
+          console.log(err);
+        });
       });
     };
-
     this.addJobs = function(job) {
       $http({
         method: 'POST',
@@ -35,11 +57,27 @@ module.exports = function(app) {
         }
       })
       .then((res) => {
-        this.jobs.push(res.data);
+        this.backlog.push(res.data);
       }, (err) => {
         console.log(err);
       });
     }.bind(this);
+
+    this.addEvent = function(events){
+      $http({
+        method: 'POST',
+        data: events,
+        url: 'http://localhost:3000/events',
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
+      .then((res) => {
+        this.events.push(res.data);
+      }, (err) => {
+        console.log(err);
+      });
+    };
 
     this.deleteJobs = function(job) {
       $http({

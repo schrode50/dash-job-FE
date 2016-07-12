@@ -4,12 +4,19 @@ module.exports = function(app) {
       templateUrl: './templates/job/jobform.html',
       scope: {
         job: '=',
-        type: '@'
+        type: '@',
+        url: '='
       },
       require: '^^ngController',
       link: function ($scope, elem, attr, controller) {
         $scope.deleteJob = controller.deleteJob;
-        $scope.submit = $scope.type === 'new' ? controller.addJobs : controller.updateJobs;
+        $scope.submit = function(job) {
+          controller.addJobs(job);
+          $scope.job ={}
+          controller.paseteurl = ""
+          controller.showform = false
+        };
+        //$scope.submit = $scope.type === 'new' ? controller.addJobs : controller.updateJobs;
       }
     };
   });
