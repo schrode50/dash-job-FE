@@ -3,7 +3,8 @@ module.exports = function(app){
     return {
       templateUrl:'./templates/job/eventList.html',
       scope: {
-        events:'='
+        events:'=',
+        mode:'='
       }
     };
   });

@@ -21,10 +21,20 @@ module.exports = function(app) {
       scope: {
         backlog: '=',
         today: '=',
-        form: '@'
+        form: '@',
+        mode:'@'
       },
       require: '^^ngController',
       link: function($scope, elem, attr, controller) {
+        $scope.changeView = function(job){
+          console.log('change view', $scope.mode);
+          if($scope.mode === 'list') $scope.mode = 'single';
+          if(!job) return $scope.mode = 'list';
+          if($scope.mode === 'single'){
+            console.log('changing the scope mode', $scope.mode);
+            $scope.currentJob = job;
+          }
+        };
         $scope.$watch('today', function(newModel, oldModel) {
           console.log('today', $scope.today, $scope.today.length);
           console.log();
