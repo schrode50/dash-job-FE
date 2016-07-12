@@ -1,9 +1,11 @@
 module.exports = function(app) {
-  app.controller('JobController', function($http, AuthService) {
+  app.controller('JobController', function($http, AuthService, sortJobs) {
     this.$http = $http;
     this.jobs = [];
-    this.today = [{company:"test", title:"title"}];
-
+    this.today = [];  //from active and isToay = true
+    this.backlog = [];  //from active and value > 0
+    this.inprocess = []; //from active and value > 2
+    this.applied = []; //from active and value = 1
 
     this.getActiveJobs = function(){
       $http({
@@ -15,6 +17,9 @@ module.exports = function(app) {
       })
       .then((res) => {
         this.jobs = res.data;
+        this.today = sortJobs.getToday(this.jobs)
+        this.backlog = sortJobs.getBackLog(this.jobs)
+        console.log("today",sortJobs.getToday(this.jobs));
       },(err) => {
         console.log(err);
       });
@@ -57,7 +62,7 @@ module.exports = function(app) {
       $http({
         method: 'PUT',
         data: job,
-        url: 'http://localhost:3000/jobs',
+        url: 'http://localhost:3000/jobs/' + job._id,
         headers: {
           token: AuthService.getToken()
         }
