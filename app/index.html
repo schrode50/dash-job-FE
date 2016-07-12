@@ -13,38 +13,9 @@
 
   <body data-ng-app="JobDash">
 
-<main ng-controller="AuthController as authctrl" ng-init="authctrl.goSignUp()">
-    <!-- <main ng-cloak ng-controller="JobController as jobctrl" ng-init="jobctrl.getJobs()">
-      <h1>
-        Jobs
-      </h1>
-          <ul>
-            <li ng-repeat="job in jobctrl.jobs">
-              JOB TITLE:
-              {{job.title}}
-              COMPANY:
-              {{job.company}}
-              <form ng-submit="jobctrl.updateJobs(job, updatedJob)">
-                <input type="text" ng-model="updatedJob.title" placeholder="title">
-                <input type="text" ng-model="updatedJob.company" placeholder="company">
-                <button type="submit">SUBMIT</button>
-              </form>
-              <button ng-click="jobctrl.deleteJobs(job)">DELETE</button>
-            <li>
-          </ul>
-          <form ng-submit="jobctrl.addJobs()">
-            <input type="text" ng-model="jobctrl.newJob.title" placeholder="title">
-            <input type="text" ng-model="jobctrl.newJob.company" placeholder="company">
-            <button type="submit">SUBMIT</button>
-          </form> -->
+      <div ng-view></div>
 
+      <script src="bundle.js"></script>
+    </body>
 
-
-
-          <main ng-view></main>
-
-        </main>
-        <script src="bundle.js"></script>
-      </body>
-
-    </html>
+  </html>

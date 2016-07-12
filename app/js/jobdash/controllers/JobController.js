@@ -12,8 +12,7 @@ module.exports = function(app) {
         }
       })
       .then((res) => {
-        console.log(res.data);
-        this.jobs = res.data.jobs;
+        this.jobs = res.data;
       },(err) => {
         console.log(err);
       });
