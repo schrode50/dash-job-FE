@@ -2,6 +2,8 @@ module.exports = function(app) {
   app.controller('JobController', function($http, AuthService) {
     this.$http = $http;
     this.jobs = [];
+    this.today = [{company:"test", title:"title"}];
+
 
     this.getActiveJobs = function(){
       $http({

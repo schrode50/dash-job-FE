@@ -1,13 +1,7 @@
 <form ng-submit="submit(job)">
-  <input type="text" ng-model="job.title" placeholder="title">
+  <input type="text" ng-model="job.url" placeholder="url">
   <input type="text" ng-model="job.company" placeholder="company">
+  <input type="text" ng-model="job.title" placeholder="title">
   <button type="submit">SUBMIT</button>
   <button ng-show="type === 'edit'" ng-click="deleteJob(job)">Delete</button>
 </form>
-
-
-<!-- <form ng-submit="submit(shark)">
-  <input type="text" placeholder="{{shark.name}}" ng-model="shark.name"/>
-  <button type="submit">{{type}}</button>
-  <button ng-show="type === 'edit'" ng-click="deleteShark(shark)">Delete</button>
-</form> -->
