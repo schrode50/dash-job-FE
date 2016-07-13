@@ -17,18 +17,25 @@
   </div>
 
   <div class="row">
-    <div class="three columns jobbutton">Today</div>
-    <div class="three columns jobbutton">In Proccess</div>
-    <div class="three columns jobbutton">Backlog</div>
-    <div class="three columns jobbutton">Applied</div>
+    <pane-container backlog="jobctrl.backlog" today="jobctrl.today" inprocess="jobctrl.inprocess" applied="jobctrl.applied"></pane-container>
   </div>
 
-  <div class="row">
-    <div class="six columns jobs">
-      <job-list backlog="jobctrl.backlog" today="jobctrl.today"></job-list>
+  <div ng-show="jobctrl.showbacklog" class="row">
+    <div class="twelve columns jobs">
+      <backlog-view backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
     </div>
-    <div class="six columns events">Events</div>
-    <event-list events="jobctrl.events"></event-list>
+  </div>
+
+
+    <div ng-show="jobctrl.showjobevents" class="row">
+      <div class="six columns jobs">
+        <backlog-view backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
+      </div>
+
+    <div class="six columns events">
+      events
+      <event-list events="jobctrl.events"></event-list>
+    </div>
 
   </div>
 
