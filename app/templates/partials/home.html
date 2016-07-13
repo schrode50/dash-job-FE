@@ -1,0 +1,42 @@
+<div ng-cloak="" ng-controller="JobController as jobctrl" ng-init="jobctrl.getActiveJobs()">
+
+  <div class="row addbar">
+    <input type="text" ng-model="jobctrl.paseteurl" ng-paste="jobctrl.pasteHandler()">
+  </div>
+
+  <div ng-show="jobctrl.showform" class="row jobform">
+
+  <div class="twelve columns">
+    <job-form type="new" job="{}" url="jobctrl.paseteurl"></job-form>
+  </div>
+
+  </div>
+
+  <div class="row graph">
+    <div class="twelve columns">Graph</div>
+  </div>
+
+  <div class="row">
+    <pane-container backlog="jobctrl.backlog" today="jobctrl.today" inprocess="jobctrl.inprocess" applied="jobctrl.applied"></pane-container>
+  </div>
+
+  <div ng-show="jobctrl.showbacklog" class="row">
+    <div class="twelve columns jobs">
+      <backlog-view backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
+    </div>
+  </div>
+
+
+    <div ng-show="jobctrl.showjobevents" class="row">
+      <div class="six columns jobs">
+        <backlog-view backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
+      </div>
+
+    <div class="six columns events">
+      events
+      <event-list events="jobctrl.events"></event-list>
+    </div>
+
+  </div>
+
+</div>
