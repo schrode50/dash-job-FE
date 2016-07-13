@@ -1,3 +1,11 @@
+h4 {
+  padding: .5em;
+}
+
+div {
+  border-radius: 10px;
+}
+
 .addbar {
 
   padding-top: 20px;
@@ -9,7 +17,9 @@
 .graph {
   height: 200px;
   background-color: lightgray;
-  margin-bottom: 10px
+  margin-bottom: 10px;
+  padding-left: .6em;
+  padding-top: .5em;
 }
 
 
