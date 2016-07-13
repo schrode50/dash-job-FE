@@ -4,4 +4,5 @@ module.exports = function(app) {
   require('./eventList')(app);
   require('./pane')(app);
   require('./paneContainer')(app);
+  require('./addbar')(app);
 };

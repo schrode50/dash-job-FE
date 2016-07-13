@@ -1,13 +1,11 @@
 <div ng-cloak="" ng-controller="JobController as jobctrl" ng-init="jobctrl.getActiveJobs()">
 
-  <div class="row addbar">
-    <input type="text" ng-model="jobctrl.paseteurl" ng-paste="jobctrl.pasteHandler()">
-  </div>
 
+<add-bar></add-bar>
   <div ng-show="jobctrl.showform" class="row jobform">
 
   <div class="twelve columns">
-    <job-form type="new" job="{}" url="jobctrl.paseteurl"></job-form>
+    <job-form type="new" job="{}" url="jobctrl.pasteUrl" jobtitle="jobctrl.formjobTitle" jobcompany="jobctrl.formjobCompany"></job-form>
   </div>
 
   </div>
