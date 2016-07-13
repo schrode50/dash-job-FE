@@ -3,5 +3,5 @@ module.exports = function(app) {
   require('./jobForm')(app);
   require('./pane')(app);
   require('./paneContainer')(app);
-  require('./addbar')(app);
+  require('./eventForm')(app);
 };
