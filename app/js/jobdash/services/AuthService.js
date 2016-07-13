@@ -1,7 +1,7 @@
 module.exports = function(app) {
   app.factory('AuthService', function($http, $window, $location) {
     let token = $window.localStorage.token;
-    let url = process.env.URI || 'http://localhost:3000/';
+    let url = process.env.URI;
     const service = {};
 
     service.signUp = function(user) {

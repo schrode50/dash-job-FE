@@ -55,7 +55,7 @@
 	__webpack_require__(19)(JobDash);
 
 
-	let ApiUrl = (undefined);
+	let ApiUrl = ("http://localhost:3000/");
 	console.log(ApiUrl);
 
 
@@ -33247,7 +33247,7 @@
 
 	'use strict';
 	module.exports = function (app) {
-	  let url = (undefined) || 'http://localhost:3000/';
+	  let url = ("http://localhost:3000/");
 	  app.controller('JobController', function ($http, AuthService, sortJobs) {
 	    this.$http = $http;
 	    this.jobs = [];
@@ -33637,7 +33637,7 @@
 	module.exports = function(app) {
 	  app.factory('AuthService', function($http, $window, $location) {
 	    let token = $window.localStorage.token;
-	    let url = (undefined) || 'http://localhost:3000/';
+	    let url = ("http://localhost:3000/");
 	    const service = {};
 
 	    service.signUp = function(user) {
