@@ -29,6 +29,7 @@ module.exports = function(app) {
         console.log('in service signin then');
         token = res.data.token;
         $window.localStorage.token = token;
+        $location.url('/');
         return res;
       }, (err) => {
         console.log(err);
@@ -41,7 +42,7 @@ module.exports = function(app) {
     };
 
     service.getToken = function() {
-      return token;
+      return $window.localStorage.token;
     };
 
     return service;

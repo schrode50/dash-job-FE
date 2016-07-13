@@ -1,42 +1,83 @@
-module.exports = function(app) {
-  app.controller('JobController', function($http, AuthService) {
+module.exports = function (app) {
+  app.controller('JobController', function ($http, AuthService, sortJobs) {
     this.$http = $http;
     this.jobs = [];
-    this.today = [{company:"test", title:"title"}];
+    this.events = [];
+    this.today = []; //from active and isToay = true
+    this.backlog = []; //from active and value > 0
+    this.inprocess = []; //from active and value > 2
+    this.applied = []; //from active and value = 1
+    this.showform = false;
+    this.showjobevents = false;
+    this.showbacklog = true;
+    this.paseteurl = '';
 
+    this.pasteHandler = function () {
+      this.showform = true;
+    };
 
-    this.getActiveJobs = function(){
+    this.getActiveJobs = function () {
+      console.log('get active jobs');
       $http({
         method: 'GET',
-        url:'http://localhost:3000/jobs/active',
+        url: 'http://localhost:3000/jobs/active',
         headers: {
           token: AuthService.getToken()
         }
       })
       .then((res) => {
         this.jobs = res.data;
-      },(err) => {
-        console.log(err);
+        this.today = sortJobs.getToday(this.jobs);
+        this.backlog = sortJobs.getBackLog(this.jobs);
+      })
+      .then(() => {
+        $http({
+          method: 'GET',
+          url: 'http://localhost:3000/events/active',
+          headers: {
+            token: AuthService.getToken()
+          }
+        })
+        .then((res) => {
+          this.events = res.data;
+        }, (err) => {
+          console.log(err);
+        });
       });
     };
-
-    this.addJobs = function(job) {
+    this.addJobs = function (job) {
       $http({
         method: 'POST',
         data: job,
-        url: 'http://localhost:3000/jobs',
-        headers: {
-          token: AuthService.getToken()
-        }
-      })
-      .then((res) => {
-        this.jobs.push(res.data);
-      }, (err) => {
-        console.log(err);
-      });
+          url: 'http://localhost:3000/jobs',
+          headers: {
+            token: AuthService.getToken()
+          }
+        })
+        .then((res) => {
+          this.backlog.push(res.data);
+        }, (err) => {
+          console.log(err);
+        });
     }.bind(this);
 
-    this.deleteJobs = function(job) {
+    this.addEvent = function (events) {
+      $http({
+          method: 'POST',
+          data: events,
+          url: 'http://localhost:3000/events',
+          headers: {
+            token: AuthService.getToken()
+          }
+        })
+        .then((res) => {
+          this.events.push(res.data);
+        }, (err) => {
+          console.log(err);
+        });
+    };
+
+    this.deleteJobs = function (job) {
       $http({
         method: 'DELETE',
         data: job,
@@ -53,11 +94,11 @@ module.exports = function(app) {
       });
     }.bind(this);
 
-    this.updateJobs = function(job) {
+    this.updateJobs = function (job) {
       $http({
         method: 'PUT',
         data: job,
-        url: 'http://localhost:3000/jobs',
+        url: 'http://localhost:3000/jobs/' + job._id,
         headers: {
           token: AuthService.getToken()
         }
