@@ -3,7 +3,7 @@ module.exports = function(app){
     return{
       templateUrl:'./templates/job/jobItem.html',
       scope:{
-        singleJob:'='
+        singleJob:'@'
       },
       require:'^^ngController',
       link:function($scope,elem,attr,controller){
