@@ -7,16 +7,14 @@ module.exports = function (app) {
     this.backlog = []; //from active and value > 0
     this.inprocess = []; //from active and value > 2
     this.applied = []; //from active and value = 1
-    this.showform = false;
     this.showjobevents = false;
     this.showbacklog = true;
-    this.paseteurl = '';
     this.jobCard = {};
     this.mode = 'list';
-    this.formjobTitle = '';
-    this.formjobCompany = '';
+    this.linkApiJob = {};
 
     this.getLink = function (link) {
+
       $http({
         method: 'POST',
         data: link,
@@ -26,8 +24,7 @@ module.exports = function (app) {
         }
       })
         .then((res) => {
-          this.formjobCompany = res.data.company;
-          this.formjobTitle  = res.data.title;
+          this.linkApiJob = res.data
         }, (err) => {
           console.log(err);
         });
@@ -64,6 +61,7 @@ module.exports = function (app) {
             });
         });
     };
+
     this.addJobs = function (job) {
       $http({
         method: 'POST',
@@ -81,6 +79,7 @@ module.exports = function (app) {
     }.bind(this);
 
     this.addEvent = function (events) {
+      console.log("here");
       $http({
         method: 'POST',
         data: events,
@@ -90,11 +89,12 @@ module.exports = function (app) {
         }
       })
         .then((res) => {
-          this.events.push(res.data);
+          console.log("Jobcard",this.jobCard);
+          this.jobCard.job.events.push(res.data);
         }, (err) => {
           console.log(err);
         });
-    };
+    }.bind(this);
 
     this.deleteJobs = function (job) {
       $http({

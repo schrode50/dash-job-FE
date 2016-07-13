@@ -1,49 +1,59 @@
 <div ng-cloak="" ng-controller="JobController as jobctrl" ng-init="jobctrl.getActiveJobs()">
 
 
-<add-bar></add-bar>
-  <div ng-show="jobctrl.showform" class="row jobform">
-
-  <div class="twelve columns">
-    <job-form type="new" job="{}" url="jobctrl.pasteUrl" jobtitle="jobctrl.formjobTitle" jobcompany="jobctrl.formjobCompany"></job-form>
+  <div class="row">
+    <job-form link-api-job="jobctrl.linkApiJob"></job-form>
   </div>
 
-  </div>
 
-  <div class="row graph">
+
+  <!-- <div class="row graph">
     <div class="twelve columns">Graph</div>
-  </div>
+  </div> -->
+
   <div class="row">
       <pane-container backlog="jobctrl.backlog" today="jobctrl.today" inprocess="jobctrl.inprocess" applied="jobctrl.applied"></pane-container>
     </div>
 
     <div ng-show="jobctrl.showbacklog" class="row">
-      <div class="twelve columns jobs">
+      <div class="twelve columns">
         <backlog-view backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
       </div>
     </div>
 
 
       <div ng-show="jobctrl.showjobevents" class="row">
-        <div class="six columns jobs">
+        <div class="six columns">
           <backlog-view backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
         </div>
 
-      <div class="six columns events">
-        <div>
-          <p>{{jobctrl.jobCard.job.title}}</p>
-          <p>{{jobctrl.jobCard.job.company}}</p>
-            <ul ng-show="jobctrl.mode === 'single'">
+      <div id="jobcard" class="six columns events card">
+        <div class="jobinfo">
+          <h3>{{jobctrl.jobCard.job.title}}</h3>
+          <h4>{{jobctrl.jobCard.job.company}}</h4>
+        </div>
+        <div class="evenlist">
+
+
               <p> Events </p>
+<<<<<<< HEAD
+                <ul>
+              <li ng-repeat="event in jobctrl.events">
+=======
               <li ng-repeat="event in jobctrl.jobCard.job.events">
+>>>>>>> 6aa1a84c01bb5c2d94fd45a089c950c5fca9d5f4
                 {{event.note}}
               </li>
             </ul>
-        </div>
+          </div>
+            <div class="eventform">
+              <event-form jobId="jobctrl.jobCard.job._id"></event-form>
+
+            </div>
+
         <!-- <job-item ng-if="jobctrl.mode === 'single'" singleJob="{{singleJob}}"></job-item>
         <event-list mode="jobctrl.mode" events="jobctrl.events"></event-list> -->
       </div>
 
     </div>
-
-</div>
+  </div>
