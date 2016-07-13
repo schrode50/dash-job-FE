@@ -15,24 +15,27 @@
   <div class="row graph">
     <div class="twelve columns">Graph</div>
   </div>
-
   <div class="row">
-    <div class="three columns jobbutton">Today</div>
-    <div class="three columns jobbutton">In Proccess</div>
-    <div class="three columns jobbutton">Backlog</div>
-    <div class="three columns jobbutton">Applied</div>
-  </div>
-
-  <div class="row">
-    <div class="six columns jobs">
-      <job-list backlog="jobctrl.backlog" today="jobctrl.today" mode="jobctrl.mode"></job-list>
+      <pane-container backlog="jobctrl.backlog" today="jobctrl.today" inprocess="jobctrl.inprocess" applied="jobctrl.applied"></pane-container>
     </div>
 
-    <div class="six columns events">
-    <job-item ng-if="jobctrl.mode === 'single'" job=""></job-item>
-    <event-list mode="jobctrl.mode" events="jobctrl.events"></event-list>
+    <div ng-show="jobctrl.showbacklog" class="row">
+      <div class="twelve columns jobs">
+        <backlog-view mode="jobctrl.mode" backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
+      </div>
     </div>
 
-  </div>
+
+      <div ng-show="jobctrl.showjobevents" class="row">
+        <div class="six columns jobs">
+          <backlog-view mode="jobctrl.mode" backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
+        </div>
+
+      <div class="six columns events">
+        <job-item ng-if="jobctrl.mode === 'single'" job=""></job-item>
+        <event-list mode="jobctrl.mode" events="jobctrl.events"></event-list>
+      </div>
+
+    </div>
 
 </div>
