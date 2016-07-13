@@ -35,7 +35,7 @@
           <p>{{jobctrl.jobCard.job.company}}</p>
             <ul ng-show="jobctrl.mode === 'single'">
               <p> Events </p>
-              <li ng-repeat="event in jobctrl.events">
+              <li ng-repeat="event in jobctrl.jobCard.job.events">
                 {{event.note}}
               </li>
             </ul>
