@@ -57,8 +57,8 @@ module.exports = function (app) {
           })
             .then((res) => {
               this.events = res.data;
-              this.today = sortJobs.attachEvents(this.today)
-              this.backlog = sortJobs.attachEvents(this.backlog)
+              this.today = sortJobs.attachEvents(this.today, this.events)
+              this.backlog = sortJobs.attachEvents(this.backlog, this.events)
             }, (err) => {
               console.log(err);
             });
