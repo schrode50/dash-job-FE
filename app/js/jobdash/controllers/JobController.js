@@ -12,6 +12,7 @@ module.exports = function (app) {
     this.showbacklog = true;
     this.paseteurl = '';
     this.mode='list';
+    this.singleJob;
 
 
     this.pasteHandler = function () {

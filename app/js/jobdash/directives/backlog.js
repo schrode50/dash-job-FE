@@ -27,15 +27,18 @@ module.exports = function (app) {
       link: function($scope, elem, attr, controller) {
         // $scope.mode = controller.mode;
         // $scope.changeView = controller.changeView;
-        $scope.changeView= function(){
+        $scope.changeView= function(job){
           console.log('change view', $scope.mode);
-          if($scope.mode === 'list') $scope.mode= 'single';
+          if($scope.mode === 'list') {
+            $scope.mode= 'single';
+          }
           //if(!job) return $scope.mode = 'list';
 
           if($scope.mode === 'single'){
             console.log('changing the scope mode');
             // $scope.mode = 'list'
             controller.mode = 'single';
+            controller.singleJob = job;
             // $scope.currentJob = job;
           }
         };

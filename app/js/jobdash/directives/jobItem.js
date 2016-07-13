@@ -3,7 +3,14 @@ module.exports = function(app){
     return{
       templateUrl:'./templates/job/jobItem.html',
       scope:{
-        job:'='
+        singleJob:'='
+      },
+      require:'^^ngController',
+      link:function($scope,elem,attr,controller){
+        $scope.$watch('singleJob', function(){
+          $scope.singleJob = controller.singleJob;
+          console.log($scope.singleJob);
+        });
       }
     };
   });
