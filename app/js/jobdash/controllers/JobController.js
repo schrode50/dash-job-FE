@@ -11,11 +11,6 @@ module.exports = function(app) {
     this.paseteurl = '';
     this.mode = 'list';
 
-    // this.changeView = function(){
-    //   if(this.mode === 'list') {
-    //     this.mode = 'single';
-    //   }
-    // };
 
     this.pasteHandler = function(){
       this.showform = true;
@@ -120,5 +115,13 @@ module.exports = function(app) {
         console.log(err);
       });
     }.bind(this);
+
+    // this.changeView = function(){
+    //   console.log('change view controller');
+    //   if(this.mode === 'list') {
+    //     this.mode = 'single';
+    //   }
+    //   console.log('change view controller', this.mode);
+    // };
   });
 };

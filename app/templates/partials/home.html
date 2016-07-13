@@ -25,12 +25,12 @@
 
   <div class="row">
     <div class="six columns jobs">
-      <job-list backlog="jobctrl.backlog" today="jobctrl.today" mode="jobctrl.mode" ></job-list>
+      <job-list backlog="jobctrl.backlog" today="jobctrl.today" mode="jobctrl.mode"></job-list>
     </div>
 
-    <div class="six columns events">Events
-    <job-item ng-show="mode === 'single'" job="jobctrl.today"></job-item>
-    <event-list ng-hide="mode === 'list'" mode="jobctrl.mode" events="jobctrl.events"></event-list>
+    <div class="six columns events">
+    <job-item ng-if="jobctrl.mode === 'single'" job="jobctrl.jobs"></job-item>
+    <event-list mode="jobctrl.mode" events="jobctrl.events"></event-list>
     </div>
 
   </div>
