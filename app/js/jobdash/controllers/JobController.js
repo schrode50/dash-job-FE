@@ -11,8 +11,8 @@ module.exports = function (app) {
     this.showjobevents = false;
     this.showbacklog = true;
     this.paseteurl = '';
-    this.jobCard = {};
-    this.mode = 'list';
+    this.mode='list';
+    this.singleJob;
     this.formjobTitle = '';
     this.formjobCompany = '';
 
@@ -61,7 +61,7 @@ module.exports = function (app) {
             }, (err) => {
               console.log(err);
             });
-      });
+        });
     };
     this.addJobs = function (job) {
       $http({
@@ -128,16 +128,17 @@ module.exports = function (app) {
         }, (err) => {
           console.log(err);
         });
-      }, (err) => {
-        console.log(err);
-      });
+      // }, (err) => {
+      //   console.log(err);
+      // });
     }.bind(this);
 
-    this.jobClick = function(job){
-      console.log('reached controller job click');
-      this.jobCard.job = job;
-      this.mode = 'single';
-      console.log('in click', this.jobCard.job);
-    }.bind(this);
+    // this.changeView = function(){
+    //   console.log('change view controller');
+    //   if(this.mode === 'list') {
+    //     this.mode = 'single';
+    //   }
+    //   console.log('change view controller', this.mode);
+    // };
   });
 };
