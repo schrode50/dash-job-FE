@@ -10,7 +10,9 @@ module.exports = function (app) {
     this.showform = false;
     this.showjobevents = false;
     this.showbacklog = true;
-    this.pasteUrl = '';
+    this.paseteurl = '';
+    this.mode='list';
+    this.singleJob;
     this.formjobTitle = '';
     this.formjobCompany = '';
 
@@ -24,13 +26,12 @@ module.exports = function (app) {
         }
       })
         .then((res) => {
-          this.formjobCompany = res.data.company
-          this.formjobTitle  = res.data.title
+          this.formjobCompany = res.data.company;
+          this.formjobTitle  = res.data.title;
         }, (err) => {
           console.log(err);
         });
     }.bind(this);
-
 
 
     this.getActiveJobs = function () {
@@ -127,5 +128,13 @@ module.exports = function (app) {
           console.log(err);
         });
     }.bind(this);
+
+    // this.changeView = function(){
+    //   console.log('change view controller');
+    //   if(this.mode === 'list') {
+    //     this.mode = 'single';
+    //   }
+    //   console.log('change view controller', this.mode);
+    // };
   });
 };

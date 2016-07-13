@@ -3,7 +3,16 @@ module.exports = function(app){
     return {
       templateUrl:'./templates/job/eventList.html',
       scope: {
-        events:'='
+        events:'=',
+        mode:'='
+      },
+      require:'^^ngController',
+      link:function($scope,elem,attr,controller){
+        console.log('directive',controller.mode);
+        $scope.$watch('mode', function(){
+          $scope.mode = controller.mode;
+        });
+
       }
     };
   });
