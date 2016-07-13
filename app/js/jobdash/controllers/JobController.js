@@ -128,9 +128,6 @@ module.exports = function (app) {
         }, (err) => {
           console.log(err);
         });
-      // }, (err) => {
-      //   console.log(err);
-      // });
     }.bind(this);
 
     // this.changeView = function(){
