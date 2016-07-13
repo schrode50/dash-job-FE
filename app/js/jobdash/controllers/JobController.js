@@ -1,4 +1,6 @@
+'use strict';
 module.exports = function (app) {
+  let url = process.env.URI || 'http://localhost:3000/';
   app.controller('JobController', function ($http, AuthService, sortJobs) {
     this.$http = $http;
     this.jobs = [];
@@ -20,7 +22,7 @@ module.exports = function (app) {
       $http({
         method: 'POST',
         data: link,
-        url: 'http://localhost:3000/link',
+        url: url + 'link',
         headers: {
           token: AuthService.getToken()
         }
