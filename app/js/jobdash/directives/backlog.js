@@ -14,9 +14,9 @@ module.exports = function (app) {
     return delta;
   };
 
-  app.directive('jobList', function () {
+  app.directive('backlogView', function () {
     return {
-      templateUrl: './templates/job/joblist.html',
+      templateUrl: './templates/job/backlog.html',
       scope: {
         backlog: '=',
         today: '=',
