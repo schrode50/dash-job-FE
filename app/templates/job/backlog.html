@@ -1,39 +1,20 @@
+<div class="sortlist card joblist">
+  <h3>Today</h3>
 
-<h4>Today</h4>
-<div class="sortlist">
-
-
-<ul dnd-list="today">
-
-
+  <ul dnd-list="today"></li>
+  <li ng-click="jobClick(job)" ng-repeat="job in today" dnd-draggable="job" dnd-moved="today.splice($index, 1)" dnd-effect-allowed="move" dnd-selected="models.selected = job" ng-class="{'selected': models.selected === job}">
+    {{job.title}}
+    {{job.company}}
   </li>
-<li  ng-click="jobClick(job)" ng-repeat="job in today"
-   dnd-draggable="job"
-   dnd-moved="today.splice($index, 1)"
-   dnd-effect-allowed="move"
-   dnd-selected="models.selected = job"
-   ng-class="{'selected': models.selected === job}"
-   >
-   {{job.title}}
-   {{job.company}}
-</li>
-
 
 </ul>
 
-<h4>Backlog</h4>
+<h3>Backlog</h3>
 <ul dnd-list="backlog">
-<li ng-click="jobClick(job)" ng-repeat="job in backlog"
-
-   dnd-draggable="job"
-   dnd-moved="backlog.splice($index, 1)"
-   dnd-effect-allowed="move"
-   dnd-selected="models.selected = job"
-   ng-class="{'selected': models.selected === job}"
-   >
-   {{job.title}}
-   {{job.company}}
-</li>
+  <li ng-click="jobClick(job)" ng-repeat="job in backlog" dnd-draggable="job" dnd-moved="backlog.splice($index, 1)" dnd-effect-allowed="move" dnd-selected="models.selected = job" ng-class="{'selected': models.selected === job}">
+    {{job.title}}
+    {{job.company}}
+  </li>
 </ul>
 
 </div>
