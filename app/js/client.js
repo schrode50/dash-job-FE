@@ -7,3 +7,6 @@ var angular = window.angular;
 var JobDash = angular.module('JobDash', ['ngRoute', 'dndLists']);
 require('./jobdash')(JobDash);
 require('./router')(JobDash);
+
+let ApiUrl = process.env.URI
+console.log(ApiUrl);
