@@ -1,8 +1,8 @@
 module.exports = function (app) {
   app.factory('sortJobs', function () {
 
-    this.today = [];  //from active and isToay = true
-    this.backlog = [];  //from active and value > 0 || isToday = false
+    this.today = []; //from active and isToay = true
+    this.backlog = []; //from active and value > 0 || isToday = false
     this.inprocess = []; //from active and value > 2
     this.applied = []; //from active and value = 1
 
@@ -20,6 +20,18 @@ module.exports = function (app) {
       });
     };
 
+    service.attachEvents = function (jobs, events) {
+      let jobsArr = [];
+      for (var i = 0; i < jobs.length; i++) {
+        jobs[i].events = events.filter(function (e) {
+          return e.jobId == jobs[i]._id;
+        });
+        jobsArr.push(jobs[i]);
+      }
+      return jobsArr;
+    };
+
+    
     return service;
   });
 };

@@ -81,7 +81,7 @@
 /**
  * Show selected elements in green
  */
-.sortlist ul[dnd-list] li.selected {
+/*.sortlist ul[dnd-list] li.selected {
     background-color: #dff0d8;
     color: #3c763d;
-}
+}*/
