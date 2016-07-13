@@ -1,9 +1,12 @@
 
+<h4>Today</h4>
+<ul dnd-list="today">
+  <li>
 
-<ul dnd-list="backlog">
-<li ng-click="changeView()"  ng-repeat="job in backlog"
+  </li>
+<li  ng-click="changeView()" ng-repeat="job in today"
    dnd-draggable="job"
-   dnd-moved="backlog.splice($index, 1)"
+   dnd-moved="today.splice($index, 1)"
    dnd-effect-allowed="move"
    dnd-selected="models.selected = job"
    ng-class="{'selected': models.selected === job}"
@@ -11,18 +14,16 @@
    {{job.title}}
    {{job.company}}
 </li>
+
+
 </ul>
-<hr />
-<br />
 
+<h4>Backlog</h4>
+<ul dnd-list="backlog">
+<li ng-click="changeView()" ng-repeat="job in backlog"
 
-<ul  dnd-list="today">
-  <li >
-
-  </li>
-<li ng-click="changeView()"  ng-repeat="job in today"
    dnd-draggable="job"
-   dnd-moved="today.splice($index, 1)"
+   dnd-moved="backlog.splice($index, 1)"
    dnd-effect-allowed="move"
    dnd-selected="models.selected = job"
    ng-class="{'selected': models.selected === job}"
