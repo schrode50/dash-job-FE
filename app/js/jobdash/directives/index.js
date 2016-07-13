@@ -5,4 +5,5 @@ module.exports = function(app) {
   require('./jobItem')(app);
   require('./pane')(app);
   require('./paneContainer')(app);
+  require('./addbar')(app);
 };

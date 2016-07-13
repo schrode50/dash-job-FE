@@ -13,21 +13,35 @@ module.exports = function (app) {
     this.paseteurl = '';
     this.mode='list';
     this.singleJob;
+    this.formjobTitle = '';
+    this.formjobCompany = '';
 
+    this.getLink = function (link) {
+      $http({
+        method: 'POST',
+        data: link,
+        url: 'http://localhost:3000/link',
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
+        .then((res) => {
+          this.formjobCompany = res.data.company;
+          this.formjobTitle  = res.data.title;
+        }, (err) => {
+          console.log(err);
+        });
+    }.bind(this);
 
-    this.pasteHandler = function () {
-      this.showform = true;
-    };
 
     this.getActiveJobs = function () {
-      console.log('get active jobs');
       $http({
-          method: 'GET',
-          url: 'http://localhost:3000/jobs/active',
-          headers: {
-            token: AuthService.getToken()
-          }
-        })
+        method: 'GET',
+        url: 'http://localhost:3000/jobs/active',
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
         .then((res) => {
           this.jobs = res.data;
           this.today = sortJobs.getToday(this.jobs);
@@ -35,12 +49,12 @@ module.exports = function (app) {
         })
         .then(() => {
           $http({
-              method: 'GET',
-              url: 'http://localhost:3000/events/active',
-              headers: {
-                token: AuthService.getToken()
-              }
-            })
+            method: 'GET',
+            url: 'http://localhost:3000/events/active',
+            headers: {
+              token: AuthService.getToken()
+            }
+          })
             .then((res) => {
               this.events = res.data;
             }, (err) => {
@@ -50,13 +64,13 @@ module.exports = function (app) {
     };
     this.addJobs = function (job) {
       $http({
-          method: 'POST',
-          data: job,
-          url: 'http://localhost:3000/jobs',
-          headers: {
-            token: AuthService.getToken()
-          }
-        })
+        method: 'POST',
+        data: job,
+        url: 'http://localhost:3000/jobs',
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
         .then((res) => {
           this.backlog.push(res.data);
         }, (err) => {
@@ -66,13 +80,13 @@ module.exports = function (app) {
 
     this.addEvent = function (events) {
       $http({
-          method: 'POST',
-          data: events,
-          url: 'http://localhost:3000/events',
-          headers: {
-            token: AuthService.getToken()
-          }
-        })
+        method: 'POST',
+        data: events,
+        url: 'http://localhost:3000/events',
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
         .then((res) => {
           this.events.push(res.data);
         }, (err) => {
@@ -82,13 +96,13 @@ module.exports = function (app) {
 
     this.deleteJobs = function (job) {
       $http({
-          method: 'DELETE',
-          data: job,
-          url: 'http://localhost:3000/jobs/' + job._id,
-          headers: {
-            token: AuthService.getToken()
-          }
-        })
+        method: 'DELETE',
+        data: job,
+        url: 'http://localhost:3000/jobs/' + job._id,
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
         .then(() => {
           let index = this.jobs.indexOf(job);
           this.jobs.splice(index, 1);
@@ -99,13 +113,13 @@ module.exports = function (app) {
 
     this.updateJobs = function (job) {
       $http({
-          method: 'PUT',
-          data: job,
-          url: 'http://localhost:3000/jobs/' + job._id,
-          headers: {
-            token: AuthService.getToken()
-          }
-        })
+        method: 'PUT',
+        data: job,
+        url: 'http://localhost:3000/jobs/' + job._id,
+        headers: {
+          token: AuthService.getToken()
+        }
+      })
         .then(() => {
           this.jobs = this.jobs.map(nJob => {
             return nJob._id === job._id ? job : nJob;
