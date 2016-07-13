@@ -11,8 +11,8 @@ module.exports = function (app) {
     this.showjobevents = false;
     this.showbacklog = true;
     this.paseteurl = '';
-    this.mode='list';
-    this.singleJob;
+    this.jobCard = {};
+    this.mode = 'list';
     this.formjobTitle = '';
     this.formjobCompany = '';
 
@@ -133,12 +133,11 @@ module.exports = function (app) {
       });
     }.bind(this);
 
-    // this.changeView = function(){
-    //   console.log('change view controller');
-    //   if(this.mode === 'list') {
-    //     this.mode = 'single';
-    //   }
-    //   console.log('change view controller', this.mode);
-    // };
+    this.jobClick = function(job){
+      console.log('reached controller job click');
+      this.jobCard.job = job;
+      this.mode = 'single';
+      console.log('in click', this.jobCard.job);
+    }.bind(this);
   });
 };

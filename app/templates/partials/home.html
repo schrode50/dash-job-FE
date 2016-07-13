@@ -19,19 +19,29 @@
 
     <div ng-show="jobctrl.showbacklog" class="row">
       <div class="twelve columns jobs">
-        <backlog-view mode="jobctrl.mode" backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
+        <backlog-view backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
       </div>
     </div>
 
 
       <div ng-show="jobctrl.showjobevents" class="row">
         <div class="six columns jobs">
-          <backlog-view mode="jobctrl.mode" backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
+          <backlog-view backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
         </div>
 
       <div class="six columns events">
-        <job-item ng-if="jobctrl.mode === 'single'" singleJob="{{singleJob}}"></job-item>
-        <event-list mode="jobctrl.mode" events="jobctrl.events"></event-list>
+        <div>
+          <p>{{jobctrl.jobCard.job.title}}</p>
+          <p>{{jobctrl.jobCard.job.company}}</p>
+            <ul ng-show="jobctrl.mode === 'single'">
+              <p> Events </p>
+              <li ng-repeat="event in jobctrl.events">
+                {{event.note}}
+              </li>
+            </ul>
+        </div>
+        <!-- <job-item ng-if="jobctrl.mode === 'single'" singleJob="{{singleJob}}"></job-item>
+        <event-list mode="jobctrl.mode" events="jobctrl.events"></event-list> -->
       </div>
 
     </div>

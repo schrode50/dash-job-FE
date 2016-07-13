@@ -20,28 +20,11 @@ module.exports = function (app) {
       scope: {
         backlog: '=',
         today: '=',
-        form: '@',
-        mode:'='
+        form: '@'
       },
       require: '^^ngController',
       link: function($scope, elem, attr, controller) {
-        // $scope.mode = controller.mode;
-        // $scope.changeView = controller.changeView;
-        $scope.changeView= function(job){
-          console.log('change view', $scope.mode);
-          if($scope.mode === 'list') {
-            $scope.mode= 'single';
-          }
-          //if(!job) return $scope.mode = 'list';
-
-          if($scope.mode === 'single'){
-            console.log('changing the scope mode');
-            // $scope.mode = 'list'
-            controller.mode = 'single';
-            controller.singleJob = job;
-            // $scope.currentJob = job;
-          }
-        };
+        $scope.jobClick = controller.jobClick;
 
         $scope.$watch('today', function (newModel, oldModel) {
           let delta = updateListItem(newModel, oldModel);
