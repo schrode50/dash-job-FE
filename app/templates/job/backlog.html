@@ -1,9 +1,10 @@
 
 <h4>Today</h4>
-<ul dnd-list="today">
-  <li>
+<div class="sortlist">
 
-  </li>
+
+<ul dnd-list="today">
+
 <li ng-repeat="job in today"
    dnd-draggable="job"
    dnd-moved="today.splice($index, 1)"
@@ -30,3 +31,4 @@
    {{job.company}}
 </li>
 </ul>
+</div>
