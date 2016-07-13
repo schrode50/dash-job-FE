@@ -1,7 +1,7 @@
 
 
 <ul dnd-list="backlog">
-<li ng-click="changeView(job)" ng-repeat="job in backlog"
+<li  ng-click="changeView()" ng-repeat="job in backlog"
    dnd-draggable="job"
    dnd-moved="backlog.splice($index, 1)"
    dnd-effect-allowed="move"
@@ -16,11 +16,11 @@
 <br />
 
 
-<ul dnd-list="today">
-  <li>
+<ul  dnd-list="today">
+  <li >
 
   </li>
-<li ng-click="changeView(job)" ng-repeat="job in today"
+<li ng-click="changeView()"  ng-repeat="job in today"
    dnd-draggable="job"
    dnd-moved="today.splice($index, 1)"
    dnd-effect-allowed="move"
@@ -31,3 +31,4 @@
    {{job.company}}
 </li>
 </ul>
+<!-- //ng-click="changeView()" -->

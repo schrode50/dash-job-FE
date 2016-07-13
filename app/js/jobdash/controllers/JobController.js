@@ -7,12 +7,19 @@ module.exports = function(app) {
     this.backlog = [];  //from active and value > 0
     this.inprocess = []; //from active and value > 2
     this.applied = []; //from active and value = 1
-    this.showform = false
-    this.paseteurl = "";
+    this.showform = false;
+    this.paseteurl = '';
+    this.mode = 'list';
+
+    // this.changeView = function(){
+    //   if(this.mode === 'list') {
+    //     this.mode = 'single';
+    //   }
+    // };
 
     this.pasteHandler = function(){
-      this.showform = true
-    }
+      this.showform = true;
+    };
 
 
     this.getActiveJobs = function(){

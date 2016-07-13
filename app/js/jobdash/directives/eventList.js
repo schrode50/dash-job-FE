@@ -5,6 +5,14 @@ module.exports = function(app){
       scope: {
         events:'=',
         mode:'='
+      },
+      require:'^^ngController',
+      link:function($scope,elem,attr,controller){
+        console.log('directive',controller.mode);
+        $scope.$watch('mode', function(){
+          $scope.mode = controller.mode;
+        });
+
       }
     };
   });
