@@ -45,6 +45,8 @@ module.exports = function (app) {
           this.jobs = res.data;
           this.today = sortJobs.getToday(this.jobs);
           this.backlog = sortJobs.getBackLog(this.jobs);
+          this.applied = sortJobs.applied(this.jobs);
+          this.inprocess = sortJobs.inprocess(this.jobs);
         })
         .then(() => {
           $http({
@@ -90,6 +92,7 @@ module.exports = function (app) {
         }
       })
         .then((res) => {
+          if (!this.jobCard.job.events) this.jobCard.job.events = [];
           this.jobCard.job.events.push(res.data);
         }, (err) => {
           console.log(err);

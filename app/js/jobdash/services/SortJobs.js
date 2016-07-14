@@ -16,9 +16,21 @@ module.exports = function (app) {
 
     service.getBackLog = function (jobs) {
       return jobs.filter(function (j) {
-        return (j.isToday != true);
+        return (j.isToday != true && j.statusValue == 0 );
       });
     };
+
+    service.applied = function(jobs){
+      return jobs.filter(function (j) {
+        return (j.statusValue == 1);
+      });
+    }
+
+    service.inprocess = function(jobs){
+      return jobs.filter(function (j) {
+        return (j.statusValue > 1);
+      });
+    }
 
     service.attachEvents = function (jobs, events) {
       let jobsArr = [];
@@ -31,7 +43,7 @@ module.exports = function (app) {
       return jobsArr;
     };
 
-    
+
     return service;
   });
 };
