@@ -4,7 +4,7 @@ const webpack = require('webpack-stream');
 const notify = require('gulp-notify');
 const plumber = require('gulp-plumber');
 const wp = require('webpack');
-const webpackplugin = new wp.DefinePlugin({'process.env':{URI: JSON.stringify(process.env.URI || 'localhost:3003')}});
+const webpackplugin = new wp.DefinePlugin({'process.env':{URI: JSON.stringify(process.env.URI || 'http://localhost:3000/')}});
 
 var paths = {
   dev: {

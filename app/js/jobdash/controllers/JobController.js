@@ -1,5 +1,7 @@
+'use strict';
 module.exports = function (app) {
-  app.controller('JobController', function ($http, AuthService, sortJobs) {
+  let url = process.env.URI;
+  app.controller('JobController', function ($http, AuthService, sortJobs, globals) {
     this.$http = $http;
     this.jobs = [];
     this.events = [];
@@ -18,7 +20,7 @@ module.exports = function (app) {
       $http({
         method: 'POST',
         data: link,
-        url: 'http://localhost:3000/link',
+        url: url + 'link',
         headers: {
           token: AuthService.getToken()
         }
@@ -34,7 +36,7 @@ module.exports = function (app) {
     this.getActiveJobs = function () {
       $http({
         method: 'GET',
-        url: 'http://localhost:3000/jobs/active',
+        url: url + 'jobs/active',
         headers: {
           token: AuthService.getToken()
         }
@@ -48,7 +50,7 @@ module.exports = function (app) {
         .then(() => {
           $http({
             method: 'GET',
-            url: 'http://localhost:3000/events/active',
+            url: url + 'events/active',
             headers: {
               token: AuthService.getToken()
             }
@@ -68,7 +70,7 @@ module.exports = function (app) {
       $http({
         method: 'POST',
         data: job,
-        url: 'http://localhost:3000/jobs',
+        url: url + 'jobs',
         headers: {
           token: AuthService.getToken()
         }
@@ -81,17 +83,17 @@ module.exports = function (app) {
     }.bind(this);
 
     this.addEvent = function (events) {
-      console.log('here');
+
       $http({
         method: 'POST',
         data: events,
-        url: 'http://localhost:3000/events',
+        url: url + 'events',
         headers: {
           token: AuthService.getToken()
         }
       })
         .then((res) => {
-          console.log('Jobcard',this.jobCard);
+
           this.jobCard.job.events.push(res.data);
         }, (err) => {
           console.log(err);
@@ -102,7 +104,7 @@ module.exports = function (app) {
       $http({
         method: 'DELETE',
         data: job,
-        url: 'http://localhost:3000/jobs/' + job._id,
+        url: url + 'jobs/' + job._id,
         headers: {
           token: AuthService.getToken()
         }
@@ -119,7 +121,7 @@ module.exports = function (app) {
       $http({
         method: 'PUT',
         data: job,
-        url: 'http://localhost:3000/jobs/' + job._id,
+        url: url + 'jobs/' + job._id,
         headers: {
           token: AuthService.getToken()
         }
@@ -134,10 +136,8 @@ module.exports = function (app) {
     }.bind(this);
 
     this.jobClick = function(job){
-      console.log('reached controller job click');
       this.jobCard.job = job;
       this.mode = 'single';
-      console.log('in click', this.jobCard.job);
     }.bind(this);
   });
 };
