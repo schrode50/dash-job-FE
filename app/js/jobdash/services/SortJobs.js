@@ -20,6 +20,18 @@ module.exports = function (app) {
       });
     };
 
+    service.applied = function(jobs){
+      return jobs.filter(function (j) {
+        return (j.statusValue == 1);
+      });
+    }
+
+    service.inprocess = function(jobs){
+      return jobs.filter(function (j) {
+        return (j.statusValue > 1);
+      });
+    }
+
     service.attachEvents = function (jobs, events) {
       let jobsArr = [];
       for (var i = 0; i < jobs.length; i++) {
@@ -31,7 +43,7 @@ module.exports = function (app) {
       return jobsArr;
     };
 
-    
+
     return service;
   });
 };
