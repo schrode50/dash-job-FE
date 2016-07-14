@@ -56,8 +56,8 @@ module.exports = function (app) {
           })
             .then((res) => {
               this.events = res.data;
-              this.today = sortJobs.attachEvents(this.today, this.events)
-              this.backlog = sortJobs.attachEvents(this.backlog, this.events)
+              this.today = sortJobs.attachEvents(this.today, this.events);
+              this.backlog = sortJobs.attachEvents(this.backlog, this.events);
             }, (err) => {
               console.log(err);
             });
@@ -81,7 +81,6 @@ module.exports = function (app) {
     }.bind(this);
 
     this.addEvent = function (events) {
-      console.log("here");
       $http({
         method: 'POST',
         data: events,
@@ -91,7 +90,6 @@ module.exports = function (app) {
         }
       })
         .then((res) => {
-          console.log("Jobcard",this.jobCard);
           this.jobCard.job.events.push(res.data);
         }, (err) => {
           console.log(err);
@@ -134,10 +132,8 @@ module.exports = function (app) {
     }.bind(this);
 
     this.jobClick = function(job){
-      console.log('reached controller job click');
       this.jobCard.job = job;
       this.mode = 'single';
-      console.log('in click', this.jobCard.job);
     }.bind(this);
   });
 };
