@@ -45,7 +45,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(25);
+	__webpack_require__(23);
+	module.exports = __webpack_require__(24);
 
 
 /***/ },
@@ -53,30 +54,48 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+
 	const angular = __webpack_require__(2);
 	__webpack_require__(4);
 	__webpack_require__(5);
 
-	describe('error service tests', function () {
-	  let sortjobs;
+	describe('JobController Testing', () => {
+	  let jobctrl;
+	  let $httpBackend;
+
 	  beforeEach(() => {
 	    angular.mock.module('JobDash');
-	    angular.mock.inject(function (sortJobs) {
-	      sortjobs = sortJobs;
+	    angular.mock.inject(function($controller, _$httpBackend_, sortJobs){
+	      jobctrl = new $controller('JobController');
+	      $httpBackend = _$httpBackend_;
 	    });
 	  });
 
-	  it('service', () => {
-	    let jobs = [{_id:1},{_id:2}];
-	    let events = [{_id:1, jobId:1},{_id:2, jobId:1},{_id:3, jobId:2},{_id:4, jobId:2},{_id:5, jobId:2},{_id:6, jobId:3}];
-	    console.log(sortjobs.attachEvents(jobs, events));
-	    expect(sortjobs.attachEvents(jobs, events)).toEqual(
-	      [
-	      { _id: 1, events: [{ _id: 1, jobId: 1 }, { _id: 2, jobId: 1 }]},
-	      { _id: 2, events: [{ _id: 3, jobId: 2 }, { _id: 4, jobId: 2 },{ _id: 5, jobId: 2 }]}
-	      ]
-	      );
+	  afterEach(() => {
+	    $httpBackend.verifyNoOutstandingRequest();
+	    $httpBackend.verifyNoOutstandingExpectation();
 	  });
+
+	  it('should get a list of jobs and events', () => {
+	    let testJob = {_id:'1', title:'test', isToday:true};
+	    $httpBackend.expectGET('http://localhost:3000/jobs/active')
+	    .respond(200,[testJob]);
+	    $httpBackend.expectGET('http://localhost:3000/events/active')
+	    .respond(200, [{jobId:'1', note:'testEvent'}]);
+	    jobctrl.getActiveJobs();
+	    $httpBackend.flush();
+	    expect(jobctrl.jobs[0].title).toBe('test');
+	    expect(jobctrl.events[0].note).toBe('testEvent');
+	  });
+
+	  it('should post a job', () => {
+	    $httpBackend.expectPOST('http://localhost:3000/link')
+	    .respond(200, {title:'testing', company:'123'});
+	    jobctrl.getLink();
+	    $httpBackend.flush();
+	    expect(jobctrl.linkApiJob.title).not.toBe('testing');
+	  });
+
 	});
 
 
@@ -34703,7 +34722,11 @@
 
 	var JobDash = angular.module('JobDash', ['ngRoute', 'dndLists']);
 	__webpack_require__(9)(JobDash);
-	__webpack_require__(24)(JobDash);
+	__webpack_require__(22)(JobDash);
+
+
+	let ApiUrl = ("http://localhost:3000/");
+	console.log(ApiUrl);
 
 
 /***/ },
@@ -36388,7 +36411,7 @@
 	module.exports = function(app) {
 	  __webpack_require__(10)(app);
 	  __webpack_require__(13)(app);
-	  __webpack_require__(21)(app);
+	  __webpack_require__(19)(app);
 	};
 
 
@@ -36404,9 +36427,11 @@
 
 /***/ },
 /* 11 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
 	module.exports = function (app) {
+	  let url = ("http://localhost:3000/");
 	  app.controller('JobController', function ($http, AuthService, sortJobs) {
 	    this.$http = $http;
 	    this.jobs = [];
@@ -36415,27 +36440,24 @@
 	    this.backlog = []; //from active and value > 0
 	    this.inprocess = []; //from active and value > 2
 	    this.applied = []; //from active and value = 1
-	    this.showform = false;
 	    this.showjobevents = false;
 	    this.showbacklog = true;
-	    this.paseteurl = '';
-	    this.mode='list';
-	    this.singleJob;
-	    this.formjobTitle = '';
-	    this.formjobCompany = '';
+	    this.jobCard = {};
+	    this.mode = 'list';
+	    this.linkApiJob = {};
 
 	    this.getLink = function (link) {
+
 	      $http({
 	        method: 'POST',
 	        data: link,
-	        url: 'http://localhost:3000/link',
+	        url: url + 'link',
 	        headers: {
 	          token: AuthService.getToken()
 	        }
 	      })
 	        .then((res) => {
-	          this.formjobCompany = res.data.company;
-	          this.formjobTitle  = res.data.title;
+	          this.linkApiJob = res.data;
 	        }, (err) => {
 	          console.log(err);
 	        });
@@ -36445,12 +36467,13 @@
 	    this.getActiveJobs = function () {
 	      $http({
 	        method: 'GET',
-	        url: 'http://localhost:3000/jobs/active',
+	        url: url + 'jobs/active',
 	        headers: {
 	          token: AuthService.getToken()
 	        }
 	      })
 	        .then((res) => {
+	          console.log('get active', res);
 	          this.jobs = res.data;
 	          this.today = sortJobs.getToday(this.jobs);
 	          this.backlog = sortJobs.getBackLog(this.jobs);
@@ -36458,23 +36481,26 @@
 	        .then(() => {
 	          $http({
 	            method: 'GET',
-	            url: 'http://localhost:3000/events/active',
+	            url: url + 'events/active',
 	            headers: {
 	              token: AuthService.getToken()
 	            }
 	          })
 	            .then((res) => {
 	              this.events = res.data;
+	              this.today = sortJobs.attachEvents(this.today, this.events)
+	              this.backlog = sortJobs.attachEvents(this.backlog, this.events)
 	            }, (err) => {
 	              console.log(err);
 	            });
 	        });
 	    };
+
 	    this.addJobs = function (job) {
 	      $http({
 	        method: 'POST',
 	        data: job,
-	        url: 'http://localhost:3000/jobs',
+	        url: url + 'jobs',
 	        headers: {
 	          token: AuthService.getToken()
 	        }
@@ -36487,26 +36513,28 @@
 	    }.bind(this);
 
 	    this.addEvent = function (events) {
+	      console.log("here");
 	      $http({
 	        method: 'POST',
 	        data: events,
-	        url: 'http://localhost:3000/events',
+	        url: url + 'events',
 	        headers: {
 	          token: AuthService.getToken()
 	        }
 	      })
 	        .then((res) => {
-	          this.events.push(res.data);
+	          console.log("Jobcard",this.jobCard);
+	          this.jobCard.job.events.push(res.data);
 	        }, (err) => {
 	          console.log(err);
 	        });
-	    };
+	    }.bind(this);
 
 	    this.deleteJobs = function (job) {
 	      $http({
 	        method: 'DELETE',
 	        data: job,
-	        url: 'http://localhost:3000/jobs/' + job._id,
+	        url: url + 'jobs/' + job._id,
 	        headers: {
 	          token: AuthService.getToken()
 	        }
@@ -36523,7 +36551,7 @@
 	      $http({
 	        method: 'PUT',
 	        data: job,
-	        url: 'http://localhost:3000/jobs/' + job._id,
+	        url: url + 'jobs/' + job._id,
 	        headers: {
 	          token: AuthService.getToken()
 	        }
@@ -36537,13 +36565,12 @@
 	        });
 	    }.bind(this);
 
-	    // this.changeView = function(){
-	    //   console.log('change view controller');
-	    //   if(this.mode === 'list') {
-	    //     this.mode = 'single';
-	    //   }
-	    //   console.log('change view controller', this.mode);
-	    // };
+	    this.jobClick = function(job){
+	      console.log('reached controller job click');
+	      this.jobCard.job = job;
+	      this.mode = 'single';
+	      console.log('in click', this.jobCard.job);
+	    }.bind(this);
 	  });
 	};
 
@@ -36566,11 +36593,10 @@
 	    };
 	    this.signUp = function(user){
 	      AuthService.signUp(user);
-	      $location.url('/');
 	    };
 	    this.signIn = function(user){
 	      AuthService.signIn(user);
-	      
+
 	    };
 	    this.signOut = function(){
 	      AuthService.signOut();
@@ -36590,8 +36616,6 @@
 	  __webpack_require__(16)(app);
 	  __webpack_require__(17)(app);
 	  __webpack_require__(18)(app);
-	  __webpack_require__(19)(app);
-	  __webpack_require__(20)(app);
 	};
 
 
@@ -36621,28 +36645,11 @@
 	      scope: {
 	        backlog: '=',
 	        today: '=',
-	        form: '@',
-	        mode:'='
+	        form: '@'
 	      },
 	      require: '^^ngController',
 	      link: function($scope, elem, attr, controller) {
-	        // $scope.mode = controller.mode;
-	        // $scope.changeView = controller.changeView;
-	        $scope.changeView= function(job){
-	          console.log('change view', $scope.mode);
-	          if($scope.mode === 'list') {
-	            $scope.mode= 'single';
-	          }
-	          //if(!job) return $scope.mode = 'list';
-
-	          if($scope.mode === 'single'){
-	            console.log('changing the scope mode');
-	            // $scope.mode = 'list'
-	            controller.mode = 'single';
-	            controller.singleJob = job;
-	            // $scope.currentJob = job;
-	          }
-	        };
+	        $scope.jobClick = controller.jobClick;
 
 	        $scope.$watch('today', function (newModel, oldModel) {
 	          let delta = updateListItem(newModel, oldModel);
@@ -36669,28 +36676,34 @@
 /* 15 */
 /***/ function(module, exports) {
 
-	module.exports = function(app) {
-	  app.directive('jobForm', function() {
+	module.exports = function (app) {
+	  app.directive('jobForm', function () {
 	    return {
 	      templateUrl: './templates/job/jobform.html',
 	      scope: {
-	        job: '=',
-	        type: '@',
-	        url: '=',
-	        jobtitle: '=',
-	        jobcompany: '='
+	        linkApiJob: '='
 	      },
 	      require: '^^ngController',
 	      link: function ($scope, elem, attr, controller) {
+	        $scope.pasteHandler = function (event) {
+	          controller.getLink({
+	            url: event.clipboardData.getData('text/plain')
+	          });
+	          $scope.showform = true;
+	        };
+
+	        $scope.$watch('linkApiJob', function () {
+	          if ($scope.linkApiJob.title) $scope.job.title = $scope.linkApiJob.title;
+	          if ($scope.linkApiJob.company) $scope.job.company = $scope.linkApiJob.company;
+	        });
+
 	        $scope.deleteJob = controller.deleteJob;
-	        $scope.submit = function(job) {
-	          job.url = $scope.url;
-	          job.title = $scope.jobtitle;
-	          job.company =$scope.jobcompany;
+
+	        $scope.submit = function (job) {
+	          console.log(job);
 	          controller.addJobs(job);
 	          $scope.job = {};
-	          controller.paseteurl = '';
-	          controller.showform = false;
+	          $scope.showform = false;
 	        };
 	      }
 
@@ -36701,54 +36714,6 @@
 
 /***/ },
 /* 16 */
-/***/ function(module, exports) {
-
-	module.exports = function(app){
-	  app.directive('eventList', function(){
-	    return {
-	      templateUrl:'./templates/job/eventList.html',
-	      scope: {
-	        events:'=',
-	        mode:'='
-	      },
-	      require:'^^ngController',
-	      link:function($scope,elem,attr,controller){
-	        console.log('directive',controller.mode);
-	        $scope.$watch('mode', function(){
-	          $scope.mode = controller.mode;
-	        });
-
-	      }
-	    };
-	  });
-	};
-
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	module.exports = function(app){
-	  app.directive('jobItem', function() {
-	    return{
-	      templateUrl:'./templates/job/jobItem.html',
-	      scope:{
-	        singleJob:'@'
-	      },
-	      require:'^^ngController',
-	      link:function($scope,elem,attr,controller){
-	        $scope.$watch('singleJob', function(){
-	          $scope.singleJob = controller.singleJob;
-	          console.log($scope.singleJob);
-	        });
-	      }
-	    };
-	  });
-	};
-
-
-/***/ },
-/* 18 */
 /***/ function(module, exports) {
 
 	module.exports = function(app){
@@ -36766,7 +36731,7 @@
 
 
 /***/ },
-/* 19 */
+/* 17 */
 /***/ function(module, exports) {
 
 	module.exports = function (app) {
@@ -36821,61 +36786,51 @@
 
 
 /***/ },
-/* 20 */
+/* 18 */
 /***/ function(module, exports) {
 
-	module.exports = function (app) {
-	  app.directive('addBar', function () {
+	module.exports = function(app){
+	  app.directive('eventForm', function() {
 	    return {
-	      templateUrl: './templates/job/addBar.html',
-	      scope: {},
-	      require: '^^ngController',
-	      link: function ($scope, elem, attr, controller) {
-	        $scope.pasteHandler = function (event) {
-	          controller.getLink({
-	            url: event.clipboardData.getData('text/plain')
-	          });
-	          controller.showform = true;
-	        };
-
-	        $scope.$watch('pasteUrl', function (newModel, oldModel) {
-	          controller.pasteUrl = $scope.pasteUrl;
-	        });
-
+	      templateUrl:'./templates/job/eventForm.html',
+	      scope: {
+	        jobId: '='
 	      },
-	      controller: ['$scope', function ($scope) {
-
-	      }]
+	      require:'^^ngController',
+	      link:function($scope,elem,attr,controller){
+	        $scope.addEvent = controller.addEvent;
+	      }
 	    };
-
 	  });
 	};
 
 
 /***/ },
-/* 21 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app){
-	  __webpack_require__(22)(app);
-	  __webpack_require__(23)(app);
+	  __webpack_require__(20)(app);
+	  __webpack_require__(21)(app);
 	};
 
 
 /***/ },
-/* 22 */
-/***/ function(module, exports) {
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
 	  app.factory('AuthService', function($http, $window, $location) {
 	    let token = $window.localStorage.token;
+	    let url = ("http://localhost:3000/");
 	    const service = {};
 
 	    service.signUp = function(user) {
-	      return $http.post('http://localhost:3000/signup', user)
+	      return $http.post(url + 'signup', user)
 	        .then((res) => {
 	          token = res.data.token;
 	          $window.localStorage.token = token;
+	          $location.url('/');
 	          return res;
 	        }, (err) => {
 	          console.log(err);
@@ -36888,7 +36843,7 @@
 	      let authString = 'Basic ' + base64Auth;
 	      console.log('in service sign in');
 	      return $http({
-	        url: 'http://localhost:3000/signin',
+	        url: url + 'signin',
 	        method: 'POST',
 	        headers: {
 	          authorization: authString
@@ -36919,7 +36874,7 @@
 
 
 /***/ },
-/* 23 */
+/* 21 */
 /***/ function(module, exports) {
 
 	module.exports = function (app) {
@@ -36962,7 +36917,7 @@
 
 
 /***/ },
-/* 24 */
+/* 22 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -36991,7 +36946,39 @@
 
 
 /***/ },
-/* 25 */
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	const angular = __webpack_require__(2);
+	__webpack_require__(4);
+	__webpack_require__(5);
+
+	describe('sort service tests', function () {
+	  let sortjobs;
+	  beforeEach(() => {
+	    angular.mock.module('JobDash');
+	    angular.mock.inject(function (sortJobs) {
+	      sortjobs = sortJobs;
+	    });
+	  });
+
+	  it('should attach events to jobs', () => {
+	    let jobs = [{_id:1},{_id:2}];
+	    let events = [{_id:1, jobId:1},{_id:2, jobId:1},{_id:3, jobId:2},{_id:4, jobId:2},{_id:5, jobId:2},{_id:6, jobId:3}];
+	    console.log(sortjobs.attachEvents(jobs, events));
+	    expect(sortjobs.attachEvents(jobs, events)).toEqual(
+	      [
+	      { _id: 1, events: [{ _id: 1, jobId: 1 }, { _id: 2, jobId: 1 }]},
+	      { _id: 2, events: [{ _id: 3, jobId: 2 }, { _id: 4, jobId: 2 },{ _id: 5, jobId: 2 }]}
+	      ]
+	      );
+	  });
+	});
+
+
+/***/ },
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//var angular = require('angular');

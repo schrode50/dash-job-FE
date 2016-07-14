@@ -42,6 +42,7 @@ module.exports = function (app) {
         }
       })
         .then((res) => {
+          console.log('get active', res);
           this.jobs = res.data;
           this.today = sortJobs.getToday(this.jobs);
           this.backlog = sortJobs.getBackLog(this.jobs);
