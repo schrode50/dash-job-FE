@@ -7,12 +7,15 @@ module.exports = function (app) {
       },
       require: '^^ngController',
       link: function ($scope, elem, attr, controller) {
-        $scope.pasteHandler = function (event) {
-          controller.getLink({
-            url: event.clipboardData.getData('text/plain')
-          });
+        $scope.formHandler = function (event) {
+          if(event.clipboardData){
+            controller.getLink({
+              url: event.clipboardData.getData('text/plain')
+            });
+          }
           $scope.showform = true;
         };
+
 
         $scope.$watch('linkApiJob', function () {
           if ($scope.linkApiJob.title) $scope.job.title = $scope.linkApiJob.title;
