@@ -23,7 +23,9 @@ module.exports = function (app) {
         form: '@'
       },
       require: '^^ngController',
-      link: function ($scope, elem, attr, controller) {
+      link: function($scope, elem, attr, controller) {
+        $scope.jobClick = controller.jobClick;
+
         $scope.$watch('today', function (newModel, oldModel) {
           let delta = updateListItem(newModel, oldModel);
           if (delta.length == 1) {

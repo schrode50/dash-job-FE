@@ -3,8 +3,7 @@ module.exports = function(app){
     return {
       templateUrl:'./templates/job/eventForm.html',
       scope: {
-        type:'@',
-        event:'='
+        jobId: '='
       },
       require:'^^ngController',
       link:function($scope,elem,attr,controller){
