@@ -12,11 +12,10 @@ module.exports = function(app){
     };
     this.signUp = function(user){
       AuthService.signUp(user);
-      $location.url('/');
     };
     this.signIn = function(user){
       AuthService.signIn(user);
-      
+
     };
     this.signOut = function(){
       AuthService.signOut();
