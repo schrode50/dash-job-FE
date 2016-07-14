@@ -16,7 +16,7 @@ module.exports = function (app) {
 
     service.getBackLog = function (jobs) {
       return jobs.filter(function (j) {
-        return (j.isToday != true);
+        return (j.isToday != true && j.statusValue == 0 );
       });
     };
 
