@@ -24,13 +24,13 @@ module.exports = function (app) {
       return jobs.filter(function (j) {
         return (j.statusValue == 1);
       });
-    }
+    };
 
     service.inprocess = function(jobs){
       return jobs.filter(function (j) {
         return (j.statusValue > 1);
       });
-    }
+    };
 
     service.attachEvents = function (jobs, events) {
       let jobsArr = [];

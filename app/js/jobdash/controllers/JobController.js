@@ -108,12 +108,12 @@ module.exports = function (app) {
           token: AuthService.getToken()
         }
       })
-        .then(() => {
-          let index = this.jobs.indexOf(job);
-          this.jobs.splice(index, 1);
-        }, (err) => {
-          console.log(err);
-        });
+      .then(() => {
+        let index = this.jobs.indexOf(job);
+        this.jobs.splice(index, 1);
+      }, (err) => {
+        console.log(err);
+      });
     }.bind(this);
 
     this.updateJobs = function (job) {
@@ -125,13 +125,13 @@ module.exports = function (app) {
           token: AuthService.getToken()
         }
       })
-        .then(() => {
-          this.jobs = this.jobs.map(nJob => {
-            return nJob._id === job._id ? job : nJob;
-          });
-        }, (err) => {
-          console.log(err);
+      .then(() => {
+        this.jobs = this.jobs.map(nJob => {
+          return nJob._id === job._id ? job : nJob;
         });
+      }, (err) => {
+        console.log(err);
+      });
     }.bind(this);
 
     this.jobClick = function(job){
