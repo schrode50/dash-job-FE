@@ -6,11 +6,6 @@
   </div>
 
 
-
-  <!-- <div class="row graph">
-    <div class="twelve columns">Graph</div>
-  </div> -->
-
   <div class="row">
       <pane-container backlog="jobctrl.backlog" today="jobctrl.today" inprocess="jobctrl.inprocess" applied="jobctrl.applied"></pane-container>
     </div>
@@ -30,7 +25,7 @@
       <div id="jobcard" class="six columns events card">
         <div class="jobinfo">
           <h4>{{jobctrl.jobCard.job.company}}</h4>
-          <h3>{{jobctrl.jobCard.job.title}}</h3>
+          <h3><a href="{{jobctrl.jobCard.job.url}}">{{jobctrl.jobCard.job.title}}<a></h3>
         </div>
         <div class="eventlist">
 
@@ -50,8 +45,6 @@
 
             </div>
 
-        <!-- <job-item ng-if="jobctrl.mode === 'single'" singleJob="{{singleJob}}"></job-item>
-        <event-list mode="jobctrl.mode" events="jobctrl.events"></event-list> -->
       </div>
 
     </div>
