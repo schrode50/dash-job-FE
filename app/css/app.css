@@ -25,6 +25,7 @@ p, h3, h4 {
 
 .sortlist {
   overflow: auto;
+  height: 550px;
   max-height: 550px;
 }
 
