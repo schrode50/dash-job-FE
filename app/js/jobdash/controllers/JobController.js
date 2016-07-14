@@ -24,7 +24,7 @@ module.exports = function (app) {
         }
       })
         .then((res) => {
-          this.linkApiJob = res.data
+          this.linkApiJob = res.data;
         }, (err) => {
           console.log(err);
         });
@@ -39,6 +39,7 @@ module.exports = function (app) {
           token: AuthService.getToken()
         }
       })
+
         .then((res) => {
           this.jobs = res.data;
           this.today = sortJobs.getToday(this.jobs);
@@ -54,11 +55,12 @@ module.exports = function (app) {
           })
             .then((res) => {
               this.events = res.data;
-              this.today = sortJobs.attachEvents(this.today, this.events)
-              this.backlog = sortJobs.attachEvents(this.backlog, this.events)
+              this.today = sortJobs.attachEvents(this.today, this.events);
+              this.backlog = sortJobs.attachEvents(this.backlog, this.events);
             }, (err) => {
               console.log(err);
             });
+
         });
     };
 
@@ -79,7 +81,7 @@ module.exports = function (app) {
     }.bind(this);
 
     this.addEvent = function (events) {
-      console.log("here");
+      console.log('here');
       $http({
         method: 'POST',
         data: events,
@@ -89,7 +91,7 @@ module.exports = function (app) {
         }
       })
         .then((res) => {
-          console.log("Jobcard",this.jobCard);
+          console.log('Jobcard',this.jobCard);
           this.jobCard.job.events.push(res.data);
         }, (err) => {
           console.log(err);
@@ -105,12 +107,12 @@ module.exports = function (app) {
           token: AuthService.getToken()
         }
       })
-        .then(() => {
-          let index = this.jobs.indexOf(job);
-          this.jobs.splice(index, 1);
-        }, (err) => {
-          console.log(err);
-        });
+      .then(() => {
+        let index = this.jobs.indexOf(job);
+        this.jobs.splice(index, 1);
+      }, (err) => {
+        console.log(err);
+      });
     }.bind(this);
 
     this.updateJobs = function (job) {
@@ -122,13 +124,13 @@ module.exports = function (app) {
           token: AuthService.getToken()
         }
       })
-        .then(() => {
-          this.jobs = this.jobs.map(nJob => {
-            return nJob._id === job._id ? job : nJob;
-          });
-        }, (err) => {
-          console.log(err);
+      .then(() => {
+        this.jobs = this.jobs.map(nJob => {
+          return nJob._id === job._id ? job : nJob;
         });
+      }, (err) => {
+        console.log(err);
+      });
     }.bind(this);
 
     this.jobClick = function(job){
