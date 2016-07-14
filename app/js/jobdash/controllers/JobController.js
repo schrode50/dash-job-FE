@@ -1,7 +1,7 @@
 'use strict';
 module.exports = function (app) {
   let url = process.env.URI;
-  app.controller('JobController', function ($http, AuthService, sortJobs) {
+  app.controller('JobController', function ($http, AuthService, sortJobs, globals) {
     this.$http = $http;
     this.jobs = [];
     this.events = [];
