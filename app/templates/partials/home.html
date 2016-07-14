@@ -29,10 +29,10 @@
 
       <div id="jobcard" class="six columns events card">
         <div class="jobinfo">
-          <h3>{{jobctrl.jobCard.job.title}}</h3>
           <h4>{{jobctrl.jobCard.job.company}}</h4>
+          <h3>{{jobctrl.jobCard.job.title}}</h3>
         </div>
-        <div class="evenlist">
+        <div class="eventlist">
 
 
               <p> Events </p>
@@ -56,3 +56,5 @@
 
     </div>
   </div>
+  <button class="signout" ng-controller="AuthController as authctrl" ng-click="authctrl.signOut()">SIGN OUT</button>
+  <script src="bundle.js"></script>
