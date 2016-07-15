@@ -1,8 +1,9 @@
-module.exports = function (app) {
-  app.directive('eventForm', function (globals) {
+module.exports = function(app){
+  app.directive('eventForm', function() {
     return {
-      templateUrl: './templates/job/eventForm.html',
+      templateUrl:'./templates/job/eventForm.html',
       scope: {
+<<<<<<< HEAD
         job: '='
       },
 
@@ -20,6 +21,13 @@ module.exports = function (app) {
       },
       controller: function ($scope) {
         $scope.items = globals.eventTypes;
+=======
+        jobId: '='
+      },
+      require:'^^ngController',
+      link:function($scope,elem,attr,controller){
+        $scope.addEvent = controller.addEvent;
+>>>>>>> e35121708285e0428125c3a64bb2de9b4836aee2
       }
     };
   });
