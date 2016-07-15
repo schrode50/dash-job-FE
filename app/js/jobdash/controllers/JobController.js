@@ -14,6 +14,7 @@ module.exports = function (app) {
     this.jobCard = {};
     this.mode = 'list';
     this.linkApiJob = {};
+    this.joblist = [];
 
     this.getLink = function (link) {
 

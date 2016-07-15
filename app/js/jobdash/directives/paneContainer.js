@@ -30,18 +30,36 @@ module.exports = function (app) {
         $scope.todayclick = function (){
           controller.showjobevents = true;
           controller.showbacklog = false;
+          controller.joblist = controller.today;
+          controller.backlogshow = false;
+          //$('div.three.columns.pane.today').addClass('.paneslected')
+          //document.getElementsByClassName('today').classList.add('.paneslected');
         };
 
         $scope.backlogclick = function (){
           controller.showjobevents = false;
           controller.showbacklog = true;
+          controller.backlogshow = true;
+        };
+
+        $scope.inprocessclick = function (){
+          controller.showjobevents = true;
+          controller.showbacklog = false;
+          controller.joblist = controller.inprocess;
+          controller.backlogshow = false;
+        };
+
+        $scope.appliedclick = function (){
+          controller.showjobevents = true;
+          controller.showbacklog = false;
+          controller.joblist = controller.applied;
+          controller.backlogshow = false
         };
 
       },
       controller: ['$scope', function($scope) {
 
 
-        $scope.inprocessclick = function (){alert();};
         $scope.appliedclick = function (){alert();};
       }]
     };

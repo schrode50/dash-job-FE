@@ -164,3 +164,7 @@ p, h3, h4 {
   margin-left: -.04em;
   margin-top: .5em;
 }
+
+.paneslected {
+  border-color: #1AAFD0
+}
