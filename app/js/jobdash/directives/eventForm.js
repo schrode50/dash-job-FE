@@ -1,5 +1,5 @@
 module.exports = function (app) {
-  app.directive('eventForm', function(globals) {
+  app.directive('eventForm', function (globals) {
     return {
       templateUrl: './templates/job/eventForm.html',
       scope: {
@@ -18,7 +18,7 @@ module.exports = function (app) {
           // controller.updateStatusOnJob(job._id, value);
         };
       },
-      controller: function($scope) {
+      controller: function ($scope) {
         $scope.items = globals.eventTypes;
       }
     };
