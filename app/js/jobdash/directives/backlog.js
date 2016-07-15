@@ -19,7 +19,9 @@ module.exports = function (app) {
       templateUrl: './templates/job/backlog.html',
       scope: {
         backlog: '=',
-        today: '='
+        today: '=',
+        backlogshow: '='
+
       },
       require: '^^ngController',
       link: function($scope, elem, attr, controller) {

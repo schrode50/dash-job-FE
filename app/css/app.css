@@ -25,6 +25,7 @@ p, h3, h4 {
 
 .sortlist {
   overflow: auto;
+  height: 550px;
   max-height: 550px;
 }
 
@@ -163,4 +164,8 @@ p, h3, h4 {
 .signout {
   margin-left: -.04em;
   margin-top: .5em;
+}
+
+.paneslected {
+  border-color: #1AAFD0
 }

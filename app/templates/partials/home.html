@@ -12,14 +12,14 @@
 
     <div ng-show="jobctrl.showbacklog" class="row">
       <div class="twelve columns">
-        <backlog-view backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
+        <backlog-view backlog="jobctrl.backlog" today="jobctrl.today"  backlogshow="jobctrl.backlogshow"></backlog-view>
       </div>
     </div>
 
 
       <div ng-show="jobctrl.showjobevents" class="row">
         <div class="six columns">
-          <backlog-view backlog="jobctrl.backlog" today="jobctrl.today"></backlog-view>
+          <backlog-view backlog="jobctrl.backlog" today="jobctrl.joblist" backlogshow="jobctrl.backlogshow"></backlog-view>
         </div>
 
       <div id="jobcard" class="six columns events card">
@@ -41,7 +41,7 @@
             </ul>
           </div>
             <div class="eventform">
-              <event-form jobid="jobctrl.jobCard.job._id"></event-form>
+              <event-form job="jobctrl.jobCard.job"></event-form>
 
             </div>
 
