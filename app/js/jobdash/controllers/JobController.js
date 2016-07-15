@@ -83,13 +83,7 @@ module.exports = function (app) {
     }.bind(this);
 
     this.addEvent = function (events) {
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 55ff6c3d5eebbc365a9aa581b25247f213529d4f
-=======
->>>>>>> e35121708285e0428125c3a64bb2de9b4836aee2
       $http({
         method: 'POST',
         data: events,
@@ -99,14 +93,7 @@ module.exports = function (app) {
         }
       })
         .then((res) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
           if (!this.jobCard.job.events) this.jobCard.job.events = [];
->>>>>>> 55ff6c3d5eebbc365a9aa581b25247f213529d4f
-=======
->>>>>>> e35121708285e0428125c3a64bb2de9b4836aee2
           this.jobCard.job.events.push(res.data);
         }, (err) => {
           console.log(err);
