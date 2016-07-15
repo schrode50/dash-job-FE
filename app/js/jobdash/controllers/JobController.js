@@ -1,7 +1,7 @@
 'use strict';
 module.exports = function (app) {
   let url = process.env.URI;
-  app.controller('JobController', function ($http, AuthService, sortJobs) {
+  app.controller('JobController', function ($http, AuthService, sortJobs, globals) {
     this.$http = $http;
     this.jobs = [];
     this.events = [];
@@ -110,12 +110,12 @@ module.exports = function (app) {
           token: AuthService.getToken()
         }
       })
-        .then(() => {
-          let index = this.jobs.indexOf(job);
-          this.jobs.splice(index, 1);
-        }, (err) => {
-          console.log(err);
-        });
+      .then(() => {
+        let index = this.jobs.indexOf(job);
+        this.jobs.splice(index, 1);
+      }, (err) => {
+        console.log(err);
+      });
     }.bind(this);
 
     this.updateJobs = function (job) {
