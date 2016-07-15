@@ -1,7 +1,7 @@
 'use strict';
 module.exports = function (app) {
   let url = process.env.URI;
-  app.controller('JobController', function ($http, AuthService, sortJobs, globals) {
+  app.controller('JobController', function ($http, AuthService, sortJobs) {
     this.$http = $http;
     this.jobs = [];
     this.events = [];
@@ -83,6 +83,7 @@ module.exports = function (app) {
     }.bind(this);
 
     this.addEvent = function (events) {
+
       $http({
         method: 'POST',
         data: events,
@@ -108,12 +109,12 @@ module.exports = function (app) {
           token: AuthService.getToken()
         }
       })
-      .then(() => {
-        let index = this.jobs.indexOf(job);
-        this.jobs.splice(index, 1);
-      }, (err) => {
-        console.log(err);
-      });
+        .then(() => {
+          let index = this.jobs.indexOf(job);
+          this.jobs.splice(index, 1);
+        }, (err) => {
+          console.log(err);
+        });
     }.bind(this);
 
     this.updateJobs = function (job) {
@@ -125,13 +126,13 @@ module.exports = function (app) {
           token: AuthService.getToken()
         }
       })
-      .then(() => {
-        this.jobs = this.jobs.map(nJob => {
-          return nJob._id === job._id ? job : nJob;
+        .then(() => {
+          this.jobs = this.jobs.map(nJob => {
+            return nJob._id === job._id ? job : nJob;
+          });
+        }, (err) => {
+          console.log(err);
         });
-      }, (err) => {
-        console.log(err);
-      });
     }.bind(this);
 
     this.jobClick = function(job){
