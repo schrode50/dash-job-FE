@@ -86,7 +86,6 @@ module.exports = function (app) {
           myEl = angular.element( document.querySelector( 'div.three.columns.pane.applied' ) );
           myEl.addClass('paneslected');
         };
-
       },
       controller: ['$scope', function($scope) {
         $scope.appliedclick = function (){alert();};
