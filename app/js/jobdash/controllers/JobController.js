@@ -41,11 +41,12 @@ module.exports = function (app) {
           token: AuthService.getToken()
         }
       })
-
         .then((res) => {
           this.jobs = res.data;
           this.today = sortJobs.getToday(this.jobs);
           this.backlog = sortJobs.getBackLog(this.jobs);
+          this.applied = sortJobs.applied(this.jobs);
+          this.inprocess = sortJobs.inprocess(this.jobs);
         })
         .then(() => {
           $http({
@@ -62,7 +63,6 @@ module.exports = function (app) {
             }, (err) => {
               console.log(err);
             });
-
         });
     };
 
@@ -83,7 +83,10 @@ module.exports = function (app) {
     }.bind(this);
 
     this.addEvent = function (events) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55ff6c3d5eebbc365a9aa581b25247f213529d4f
       $http({
         method: 'POST',
         data: events,
@@ -93,7 +96,11 @@ module.exports = function (app) {
         }
       })
         .then((res) => {
+<<<<<<< HEAD
 
+=======
+          if (!this.jobCard.job.events) this.jobCard.job.events = [];
+>>>>>>> 55ff6c3d5eebbc365a9aa581b25247f213529d4f
           this.jobCard.job.events.push(res.data);
         }, (err) => {
           console.log(err);
