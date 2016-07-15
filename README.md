@@ -3,7 +3,7 @@
 # DashJobs
 
 
-[![Build Status](https://travis-ci.org/DashJob/DashJob.svg?branch=master)](https://travis-ci.org/DashJob/DashJob)
+[![Build Status](https://travis-ci.org/DashJob/dash-job-FE.svg?branch=master)](https://travis-ci.org/DashJob/dash-job-FE)
 
 https://dashjobs.herokuapp.com/
 
