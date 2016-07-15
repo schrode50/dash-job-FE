@@ -20,8 +20,8 @@ module.exports = function (app) {
       scope: {
         backlog: '=',
         today: '=',
-        form: '@',
         backlogshow: '='
+
       },
       require: '^^ngController',
       link: function($scope, elem, attr, controller) {
